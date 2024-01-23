@@ -1,4 +1,4 @@
-package com.commerzbank.library.book;
+package com.commerzbank.library.service;
 
 import lombok.Builder;
 import lombok.Getter;
