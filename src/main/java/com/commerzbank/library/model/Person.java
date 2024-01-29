@@ -1,16 +1,14 @@
 package com.commerzbank.library.model;
 
 import lombok.*;
-
-import java.util.UUID;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
 @EqualsAndHashCode
 public class Person {
-    private UUID id;
     private String firstName;
     private String lastName;
     private UserType userType;

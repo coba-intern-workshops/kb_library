@@ -1,16 +1,14 @@
 package com.commerzbank.library.model;
 
 import lombok.*;
-
-import java.util.UUID;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
-@EqualsAndHashCode
-public class Book {
-    private UUID id;
+@EqualsAndHashCode(callSuper = true)
+public class Book extends AbstractEntity {
     private String title;
     private String author;
     private BookStatus bookStatus;

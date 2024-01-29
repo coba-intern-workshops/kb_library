@@ -1,17 +1,16 @@
 package com.commerzbank.library.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
-@Builder
+@SuperBuilder
 @ToString
 @EqualsAndHashCode
 public class Rental {
-    private UUID id;
     private Book book;
     private Person person;
     private LocalDate rentedOn;
