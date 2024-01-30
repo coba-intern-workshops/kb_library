@@ -5,6 +5,6 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class SearchCriteria {
+public class BookSearchCriteria {
     private String author;
 }

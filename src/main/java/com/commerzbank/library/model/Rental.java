@@ -9,8 +9,8 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @SuperBuilder
 @ToString
-@EqualsAndHashCode
-public class Rental {
+@EqualsAndHashCode(callSuper = true)
+public class Rental extends AbstractEntity {
     private Book book;
     private Person person;
     private LocalDate rentedOn;

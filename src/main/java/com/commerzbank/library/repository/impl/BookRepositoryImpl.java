@@ -80,6 +80,6 @@ public class BookRepositoryImpl implements Repository<Book> {
     @Override
     public List<Book> saveAll(List<Book> entities) {
         books.addAll(entities);
-        return books;
+        return entities;
     }
 }

@@ -7,8 +7,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @SuperBuilder
 @ToString
-@EqualsAndHashCode
-public class Person {
+@EqualsAndHashCode(callSuper = true)
+public class Person extends AbstractEntity {
     private String firstName;
     private String lastName;
     private UserType userType;
