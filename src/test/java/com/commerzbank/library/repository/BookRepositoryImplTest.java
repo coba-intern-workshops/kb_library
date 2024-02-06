@@ -2,7 +2,7 @@ package com.commerzbank.library.repository;
 
 import com.commerzbank.library.model.Book;
 import com.commerzbank.library.model.BookStatus;
-import com.commerzbank.library.repository.api.Repository;
+import com.commerzbank.library.repository.api.RepositoryIfc;
 import com.commerzbank.library.repository.impl.BookRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BookRepositoryImplTest {
-    private Repository<Book> bookRepository;
+    private RepositoryIfc<Book> bookRepository;
     private Book book1;
     private Book book2;
     private static final int DEFAULT_REPOSITORY_SIZE = 0;

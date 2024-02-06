@@ -1,7 +1,7 @@
 package com.commerzbank.library.repository;
 
 import com.commerzbank.library.model.*;
-import com.commerzbank.library.repository.api.Repository;
+import com.commerzbank.library.repository.api.RepositoryIfc;
 import com.commerzbank.library.repository.impl.RentalRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RentalRepositoryImplTest {
-    private Repository<Rental> rentalRepository;
+    private RepositoryIfc<Rental> rentalRepository;
     private Rental rental1;
     private Rental rental2;
     private static final int DEFAULT_REPOSITORY_SIZE = 0;

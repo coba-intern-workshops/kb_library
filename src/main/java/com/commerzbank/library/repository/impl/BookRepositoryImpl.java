@@ -1,12 +1,14 @@
 package com.commerzbank.library.repository.impl;
 
 import com.commerzbank.library.model.Book;
-import com.commerzbank.library.repository.api.Repository;
+import com.commerzbank.library.repository.api.RepositoryIfc;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class BookRepositoryImpl implements Repository<Book> {
+@Repository
+public class BookRepositoryImpl implements RepositoryIfc<Book> {
     private final List<Book> books = new ArrayList<>();
 
     @Override

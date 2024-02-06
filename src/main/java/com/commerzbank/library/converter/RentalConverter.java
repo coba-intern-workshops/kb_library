@@ -2,7 +2,9 @@ package com.commerzbank.library.converter;
 
 import com.commerzbank.library.dto.RentalDto;
 import com.commerzbank.library.model.Rental;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RentalConverter extends Converter<RentalDto, Rental> {
     public RentalConverter() {
         super(RentalConverter::convertToEntity, RentalConverter::convertToDto);

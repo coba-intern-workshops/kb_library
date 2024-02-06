@@ -5,8 +5,9 @@ import com.commerzbank.library.dto.RentalDto;
 import com.commerzbank.library.model.Book;
 import com.commerzbank.library.model.Person;
 import com.commerzbank.library.model.Rental;
-import com.commerzbank.library.repository.api.Repository;
+import com.commerzbank.library.repository.impl.RentalRepositoryImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,8 +15,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Service
 public class RentalService {
-    private final Repository<Rental> rentalRepository;
+    private final RentalRepositoryImpl rentalRepository;
     private final RentalConverter rentalConverter;
 
     public List<RentalDto> findRentals(RentalSearchCriteria rentalSearchCriteria) {

@@ -3,16 +3,18 @@ package com.commerzbank.library.service;
 import com.commerzbank.library.converter.BookConverter;
 import com.commerzbank.library.dto.BookDto;
 import com.commerzbank.library.model.Book;
-import com.commerzbank.library.repository.api.Repository;
+import com.commerzbank.library.repository.impl.BookRepositoryImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
+@Service
 public class BookService {
-    private final Repository<Book> bookRepository;
+    private final BookRepositoryImpl bookRepository;
     private final BookConverter bookConverter;
 
     public List<BookDto> findBooks(BookSearchCriteria bookSearchCriteria) {
@@ -48,11 +50,12 @@ public class BookService {
         return bookConverter.convertFromEntity(bookRepository.findByUUID(uuid).orElseThrow(NullPointerException::new));
     }
 
-    public BookDto save(Book book) {
+    public BookDto save(BookDto book) {
         if (book == null) {
             throw new IllegalArgumentException("Object cannot be null");
         } else {
-            return bookConverter.convertFromEntity(bookRepository.save(book));
+            Book bookEntity = bookConverter.convertFromDto(book);
+            return bookConverter.convertFromEntity(bookRepository.save(bookEntity));
         }
     }
 

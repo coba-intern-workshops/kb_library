@@ -4,7 +4,9 @@ import com.commerzbank.library.dto.PersonDto;
 import com.commerzbank.library.dto.UserTypeDto;
 import com.commerzbank.library.model.Person;
 import com.commerzbank.library.model.UserType;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PersonConverter extends Converter<PersonDto, Person> {
     public PersonConverter() {
         super(PersonConverter::convertToEntity, PersonConverter::convertToDto);

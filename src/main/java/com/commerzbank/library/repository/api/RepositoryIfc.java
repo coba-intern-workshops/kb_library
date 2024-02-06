@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface Repository<T> {
+public interface RepositoryIfc<T> {
     long count();
     void delete(T entity);
     void deleteAll(List<T> entities);

@@ -4,7 +4,9 @@ import com.commerzbank.library.dto.BookDto;
 import com.commerzbank.library.dto.BookStatusDto;
 import com.commerzbank.library.model.Book;
 import com.commerzbank.library.model.BookStatus;
+import org.springframework.stereotype.Component;
 
+@Component
 public class BookConverter extends Converter<BookDto, Book> {
 
     public BookConverter() {

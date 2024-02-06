@@ -1,7 +1,8 @@
 package com.commerzbank.library.repository.impl;
 
 import com.commerzbank.library.model.Rental;
-import com.commerzbank.library.repository.api.Repository;
+import com.commerzbank.library.repository.api.RepositoryIfc;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public class RentalRepositoryImpl implements Repository<Rental> {
+@Repository
+public class RentalRepositoryImpl implements RepositoryIfc<Rental> {
     private final List<Rental> rentals = new ArrayList<>();
 
     @Override
