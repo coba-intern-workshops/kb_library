@@ -68,14 +68,23 @@ public class RentalRepositoryImpl implements Repository<Rental> {
     public Rental save(Rental entity) {
         if (entity == null) {
             throw new IllegalArgumentException();
-        } else {
-            rentals.add(entity);
-            return entity;
         }
+        Optional<Rental> existingRental = rentals.stream()
+                .filter(r -> r.getId().equals(entity.getId()))
+                .findFirst();
+        existingRental.ifPresent(rentals::remove);
+        rentals.add(entity);
+        return entity;
     }
 
     @Override
     public List<Rental> saveAll(List<Rental> entities) {
+        for (Rental rental : entities) {
+            Optional<Rental> existingRental = rentals.stream()
+                    .filter(r -> r.getId().equals(rental.getId()))
+                    .findFirst();
+            existingRental.ifPresent(rentals::remove);
+        }
         rentals.addAll(entities);
         return entities;
     }

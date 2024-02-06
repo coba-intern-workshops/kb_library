@@ -65,20 +65,23 @@ public class BookRepositoryImpl implements Repository<Book> {
     public Book save(Book book) {
         if (book == null) {
             throw new IllegalArgumentException();
-        } else {
-            Book bookToSave = Book.builder()
-                            .id(book.getId())
-                            .title(book.getTitle())
-                            .author(book.getAuthor())
-                            .bookStatus(book.getBookStatus())
-                            .build();
-            books.add(bookToSave);
-            return bookToSave;
         }
+        Optional<Book> existingBook = books.stream()
+                .filter(b -> b.getId().equals(book.getId()))
+                .findFirst();
+        existingBook.ifPresent(books::remove);
+        books.add(book);
+        return book;
     }
 
     @Override
     public List<Book> saveAll(List<Book> entities) {
+        for (Book book : entities) {
+            Optional<Book> existingBook = books.stream()
+                    .filter(b -> b.getId().equals(book.getId()))
+                    .findFirst();
+            existingBook.ifPresent(books::remove);
+        }
         books.addAll(entities);
         return entities;
     }
