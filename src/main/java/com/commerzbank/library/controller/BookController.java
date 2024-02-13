@@ -1,18 +1,20 @@
 package com.commerzbank.library.controller;
 
+import com.commerzbank.library.dto.BookDeleteDto;
+import com.commerzbank.library.dto.BookCreateDto;
 import com.commerzbank.library.dto.BookDto;
 import com.commerzbank.library.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/books")
+//TODO wyszukiwanie ksiazek po nazwie/autorze
+
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("/books")
 public class BookController {
     private final BookService bookService;
 
@@ -22,7 +24,13 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<BookDto> saveBook(@RequestBody BookDto bookDto) {
-        return ResponseEntity.ok(bookService.save(bookDto));
+    public ResponseEntity<BookDto> saveBook(@RequestBody BookCreateDto bookCreateDto) {
+        return ResponseEntity.ok(bookService.save(bookCreateDto));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<BookDto> deleteBook(@PathVariable String id,
+                                                    @RequestBody BookDeleteDto bookDeleteDto) {
+        return ResponseEntity.ok(bookService.deleteBook(id, bookDeleteDto));
     }
 }

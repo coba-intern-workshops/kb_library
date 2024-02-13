@@ -11,5 +11,6 @@ import lombok.experimental.SuperBuilder;
 public class Book extends AbstractEntity {
     private String title;
     private String author;
+    @Setter
     private BookStatus bookStatus;
 }

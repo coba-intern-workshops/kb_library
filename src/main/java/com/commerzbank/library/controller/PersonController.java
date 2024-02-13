@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+//TODO dodawanie usera
+
 @RestController
 @RequiredArgsConstructor
 public class PersonController {
