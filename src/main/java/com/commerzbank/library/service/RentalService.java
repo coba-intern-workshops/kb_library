@@ -1,7 +1,10 @@
 package com.commerzbank.library.service;
 
 import com.commerzbank.library.converter.RentalConverter;
+import com.commerzbank.library.converter.RentalCreateConverter;
+import com.commerzbank.library.dto.RentalCreateDto;
 import com.commerzbank.library.dto.RentalDto;
+import com.commerzbank.library.exception.BookIsRentedException;
 import com.commerzbank.library.model.Book;
 import com.commerzbank.library.model.Person;
 import com.commerzbank.library.model.Rental;
@@ -19,6 +22,7 @@ import java.util.stream.Collectors;
 public class RentalService {
     private final RentalRepositoryImpl rentalRepository;
     private final RentalConverter rentalConverter;
+    private final RentalCreateConverter rentalCreateConverter;
 
     public List<RentalDto> findRentals(RentalSearchCriteria rentalSearchCriteria) {
         return rentalRepository.findAll().stream()
@@ -64,29 +68,25 @@ public class RentalService {
         return rentalConverter.convertFromEntity(rentalRepository.findByUUID(uuid).orElseThrow(NullPointerException::new));
     }
 
-    public RentalDto save(Rental rental) {
-        if (rental == null) {
+    public RentalDto save(RentalCreateDto rentalCreateDto) {
+        if (rentalCreateDto == null) {
             throw new IllegalArgumentException("Object cannot be null");
         }
-        return rentalConverter.convertFromEntity(rentalRepository.save(rental));
+        Rental rentalEntity = rentalCreateConverter.convertFromDto(rentalCreateDto);
+        List<Rental> rentals = rentalRepository.findAll();
+        boolean isBookRented = rentals.stream()
+                .anyMatch(rental -> rental.getBook().getId().equals(rentalCreateDto.getBook().getId())
+                        && rental.getReturned().equals(false));
+        if (isBookRented) {
+            throw new BookIsRentedException("Selected book is rented");
+        }
+        return rentalConverter.convertFromEntity(rentalRepository.save(rentalEntity));
     }
 
     public List<RentalDto> saveAll(List<Rental> rentals) {
         return rentalRepository.saveAll(rentals).stream()
                 .map(rentalConverter::convertFromEntity)
                 .collect(Collectors.toList());
-    }
-
-    public RentalDto rent(Person person, Book book, LocalDate rentedUntil) {
-        Rental rental = Rental.builder()
-                .id(UUID.randomUUID())
-                .person(person)
-                .book(book)
-                .rentedOn(LocalDate.now())
-                .rentedUntil(rentedUntil)
-                .returned(false)
-                .build();
-        return rentalConverter.convertFromEntity(rentalRepository.save(rental));
     }
 
     public RentalDto returnBook(UUID uuid) {

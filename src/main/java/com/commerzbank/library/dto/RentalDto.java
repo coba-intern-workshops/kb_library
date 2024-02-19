@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 @Builder
 @ToString
 public class RentalDto {
+    private UUID id;
     private BookDto book;
     private PersonDto person;
     private LocalDate rentedOn;

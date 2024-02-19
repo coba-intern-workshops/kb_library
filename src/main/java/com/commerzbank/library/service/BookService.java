@@ -26,7 +26,8 @@ public class BookService {
 
     public List<BookDto> findBooks(BookSearchCriteria bookSearchCriteria) {
         return bookRepository.findAll().stream()
-                .filter(book -> book.getAuthor().contains(bookSearchCriteria.getAuthor()))
+                .filter(book -> book.getAuthor().contains(bookSearchCriteria.getAuthor()) ||
+                        book.getTitle().contains(bookSearchCriteria.getTitle()))
                 .map(bookConverter::convertFromEntity)
                 .collect(Collectors.toList());
     }

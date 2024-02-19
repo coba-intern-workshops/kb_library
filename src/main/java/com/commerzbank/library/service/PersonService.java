@@ -1,6 +1,8 @@
 package com.commerzbank.library.service;
 
 import com.commerzbank.library.converter.PersonConverter;
+import com.commerzbank.library.converter.PersonCreateConverter;
+import com.commerzbank.library.dto.PersonCreateDto;
 import com.commerzbank.library.dto.PersonDto;
 import com.commerzbank.library.model.Person;
 import com.commerzbank.library.repository.impl.PersonRepositoryImpl;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class PersonService {
     private final PersonRepositoryImpl personRepository;
     private final PersonConverter personConverter;
+    private final PersonCreateConverter personCreateConverter;
 
     public List<PersonDto> findPeople(PersonSearchCriteria personSearchCriteria) {
         return personRepository.findAll().stream()
@@ -51,17 +54,18 @@ public class PersonService {
         return personConverter.convertFromEntity(personRepository.findByUUID(uuid).orElseThrow(NullPointerException::new));
     }
 
-    public PersonDto save(Person person) {
-        if (person == null) {
+    public PersonDto save(PersonCreateDto personCreateDto) {
+        if (personCreateDto == null) {
             throw new IllegalArgumentException("Object cannot be null");
         } else {
-            return personConverter.convertFromEntity(personRepository.save(person));
+            Person personEntity  = personCreateConverter.convertFromDto(personCreateDto);
+            return personConverter.convertFromEntity(personRepository.save(personEntity));
         }
     }
 
-    public List<PersonDto> saveAll(List<Person> people) {
+    public List<PersonCreateDto> saveAll(List<Person> people) {
         return personRepository.saveAll(people).stream()
-                .map(personConverter::convertFromEntity)
+                .map(personCreateConverter::convertFromEntity)
                 .collect(Collectors.toList());
     }
 }

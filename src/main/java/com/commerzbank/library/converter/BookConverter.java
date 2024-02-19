@@ -24,12 +24,12 @@ public class BookConverter extends Converter<BookDto, Book> {
                 .build();
     }
 
-    private static Book convertToEntity(BookDto bookCreateDto) {
+    private static Book convertToEntity(BookDto bookDto) {
         return Book.builder()
                 .id(UUID.randomUUID())
-                .title(bookCreateDto.getTitle())
-                .author(bookCreateDto.getAuthor())
-                .bookStatus(BookStatus.valueOf(bookCreateDto.getBookStatus().toString()))
+                .title(bookDto.getTitle())
+                .author(bookDto.getAuthor())
+                .bookStatus(BookStatus.valueOf(bookDto.getBookStatus().toString()))
                 .build();
     }
 }

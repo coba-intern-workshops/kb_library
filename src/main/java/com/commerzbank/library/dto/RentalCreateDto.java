@@ -5,15 +5,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.UUID;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 @Builder
 @ToString
-public class PersonDto {
-    private UUID id;
-    private String firstName;
-    private String lastName;
-    private UserTypeDto userType;
+public class RentalCreateDto {
+    private BookDto book;
+    private PersonDto person;
+    private LocalDate rentedOn;
+    private LocalDate rentedUntil;
 }

@@ -5,14 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
-import java.util.UUID;
-
 @Getter
 @AllArgsConstructor
 @Builder
 @ToString
-public class PersonDto {
-    private UUID id;
+public class PersonCreateDto {
     private String firstName;
     private String lastName;
     private UserTypeDto userType;

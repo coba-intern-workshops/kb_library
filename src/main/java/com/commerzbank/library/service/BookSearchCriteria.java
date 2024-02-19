@@ -7,4 +7,5 @@ import lombok.Getter;
 @Builder
 public class BookSearchCriteria {
     private String author;
+    private String title;
 }
