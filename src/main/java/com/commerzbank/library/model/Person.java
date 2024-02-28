@@ -1,5 +1,7 @@
 package com.commerzbank.library.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -8,8 +10,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @ToString
 @EqualsAndHashCode(callSuper = true)
+@Entity
 public class Person extends AbstractEntity {
     private String firstName;
     private String lastName;
+    @Enumerated
     private UserType userType;
 }

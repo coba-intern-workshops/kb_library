@@ -8,10 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 //TODO
-// kasowanie - zwalnianie stanu - aktualizacja statusu ksiazki i czy przypisana do usera
-// przedluzanie - zmiana czasu oddania o 7 dni i czy przypisana do tego usera
+// kasowanie - czy przypisana do usera
+// przedluzanie - czy przypisana do tego usera
 // wypozyczenia
 
 @RestController
@@ -28,5 +29,15 @@ public class RentalController {
     @PostMapping
     public ResponseEntity<RentalDto> saveRental(@RequestBody RentalCreateDto rentalCreateDto) {
         return ResponseEntity.ok(rentalService.save(rentalCreateDto));
+    }
+
+    @PutMapping(path = "/id/{id}/extend")
+    public ResponseEntity<RentalDto> extendRent(@PathVariable UUID id) {
+        return ResponseEntity.ok(rentalService.extendRent(id));
+    }
+
+    @PostMapping(path = "/id/{id}/return")
+    public ResponseEntity<RentalDto> returnBook(@PathVariable UUID id) {
+        return ResponseEntity.ok(rentalService.returnBook(id));
     }
 }

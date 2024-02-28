@@ -5,8 +5,7 @@ import com.commerzbank.library.converter.RentalCreateConverter;
 import com.commerzbank.library.dto.RentalCreateDto;
 import com.commerzbank.library.dto.RentalDto;
 import com.commerzbank.library.exception.BookIsRentedException;
-import com.commerzbank.library.model.Book;
-import com.commerzbank.library.model.Person;
+import com.commerzbank.library.model.BookStatus;
 import com.commerzbank.library.model.Rental;
 import com.commerzbank.library.repository.impl.RentalRepositoryImpl;
 import lombok.RequiredArgsConstructor;
@@ -73,13 +72,10 @@ public class RentalService {
             throw new IllegalArgumentException("Object cannot be null");
         }
         Rental rentalEntity = rentalCreateConverter.convertFromDto(rentalCreateDto);
-        List<Rental> rentals = rentalRepository.findAll();
-        boolean isBookRented = rentals.stream()
-                .anyMatch(rental -> rental.getBook().getId().equals(rentalCreateDto.getBook().getId())
-                        && rental.getReturned().equals(false));
-        if (isBookRented) {
+        if (rentalEntity.getBook().getBookStatus().equals(BookStatus.RENTED)) {
             throw new BookIsRentedException("Selected book is rented");
         }
+        rentalEntity.getBook().setBookStatus(BookStatus.RENTED);
         return rentalConverter.convertFromEntity(rentalRepository.save(rentalEntity));
     }
 
@@ -91,22 +87,25 @@ public class RentalService {
 
     public RentalDto returnBook(UUID uuid) {
         Rental rental = rentalConverter.convertFromDto(findByUUID(uuid));
-        if (rental.getReturned() || rental.getReturnedOn() != null) {
+        if (rental.getReturned() || rental.getReturnedOn() != null
+                || !rental.getBook().getBookStatus().equals(BookStatus.RENTED)) {
             throw new IllegalStateException("Book is already returned");
         }
 
         rental.setReturnedOn(LocalDate.now());
         rental.setReturned(true);
+        rental.getBook().setBookStatus(BookStatus.AVAILABLE);
         return rentalConverter.convertFromEntity(rentalRepository.save(rental));
     }
 
-    public RentalDto extendRentingDate(UUID uuid, int daysToExtend) {
+    public RentalDto extendRent(UUID uuid) {
         Rental rental = rentalConverter.convertFromDto(findByUUID(uuid));
-        if (rental.getReturned() || rental.getReturnedOn() != null) {
+        if (rental.getReturned() || rental.getReturnedOn() != null
+                || !rental.getBook().getBookStatus().equals(BookStatus.RENTED)) {
             throw new IllegalStateException("Book is already returned");
         }
 
-        rental.setRentedUntil(rental.getRentedUntil().plusDays(daysToExtend));
+        rental.setRentedUntil(rental.getRentedUntil().plusDays(7));
         return rentalConverter.convertFromEntity(rentalRepository.save(rental));
     }
 }
